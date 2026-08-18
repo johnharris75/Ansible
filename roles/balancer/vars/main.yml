@@ -1,0 +1,12 @@
+firewall-rules:
+  - port: 8080/tcp
+  - zone: public
+    service: http
+    source: 192.168.56.106
+
+proxy-appservers:
+  - name: node9
+    ip: 192.168.56.105
+    backend_port: 80
+
+      

@@ -1,0 +1,26 @@
+---
+- name: packages
+  loop: "{{ packages }}"
+  dnf:
+    name: "{{ item }}"
+    state: latest
+
+- name: service
+  loop: "{{ packages }}"
+  service:
+    name: "{{ item }}"
+    enabled: true
+    state: started
+
+- name: firewall
+  loop: "{{ rules }}"
+  firewalld:
+    service: "{{ item }}"
+    permanent: true
+    state: enabled
+    immediate: true
+
+- name: template
+  template:
+    src: ./index.html.j2
+    dest: /var/www/html/index.html

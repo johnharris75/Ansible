@@ -1,0 +1,23 @@
+---
+- name: packages
+  hosts: all
+  become: true
+  tasks:
+    - name: install php ans mariadb on all hosts
+      loop:
+        - php
+        - mariadb
+      dnf:
+        name: "{{ item }}"
+        state: latest
+
+    - name: install dev tools on dev
+      when: inventory_hostname in groups['dev']
+      dnf:
+        name: '@RPM Development Tools'
+        state: latest
+    - name:
+      when: inventory_hostname in groups['dev']
+      dnf:
+        name: "*"
+        state: latest

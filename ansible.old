@@ -1,0 +1,13 @@
+[defaults]
+roles_path= /home/devops/ansible/roles
+collections_path= /home/devops/ansible/collections
+remote_user= devops
+host_key_checking= False
+inventory= /home/devops/ansible/inventory
+
+[privelege_escalation]
+become= True
+become_method= sudo
+become_user= root
+become_ask_pass= False
+

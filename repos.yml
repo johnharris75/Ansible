@@ -1,0 +1,15 @@
+---
+- name: repos
+  hosts: test
+  become: true
+  tasks:
+    - name: repo
+      yum_repository:
+        name: baseos
+        description: baseos
+        baseurl: file:///
+        gpgcheck: yes
+        enabled: yes
+        gpgkey: file:///etc/pki
+
+
