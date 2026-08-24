@@ -3,8 +3,13 @@
   hosts: all
   become: true
   tasks:
+    - name: create user celi
+      ansible.builtin.user:
+        name: celi
+
     - name: cron
-      cron: 
-        name: job
-        job: 'logger echo "SADFJKH"'
+      ansible.builtin.cron:
+        name: cron
+        job: 'logger echo "password"'
+        user: celi
         minute: "*/2"

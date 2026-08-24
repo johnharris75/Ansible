@@ -1,0 +1,8 @@
+---
+- name: selinux
+  hosts: all
+  become: true
+  vars:
+    - selinux_state: permissive
+  roles:
+    - linux-system-roles.selinux

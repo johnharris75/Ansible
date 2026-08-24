@@ -1,0 +1,50 @@
+---
+- name: users
+  hosts: dev test
+  become: true
+  vars_files:
+    - ./user_list.yml
+    - ./vault.yml
+
+  tasks:
+    - name: ensure groups
+      ansible.builtin.group:
+        name: devs
+        state: present 
+
+    - name: create user
+      loop: "{{ users }}"
+      when: item.job == 'developer'
+      ansible.builtin.user:
+        name: "{{ item.name }}"
+        shell: /bin/bash
+        uid: "{{ item.uid }}"
+        groups: devs
+        append: true
+        password: "{{ ' dev_pass' | password_hash('sha512') }}"
+
+
+
+- name: users
+  hosts: prod
+  become: true
+  vars_files:
+    - ./user_list.yml
+    - ./vault.yml
+
+  tasks:
+    - name: ensure groups
+      ansible.builtin.group:
+        name: mgrs
+        state: present
+
+    - name: create user
+      loop: "{{ users }}"
+      when: item.job == 'manager'
+      ansible.builtin.user:
+        name: "{{ item.name }}"
+        shell: /bin/bash
+        uid: "{{ item.uid }}"
+        groups: mgrs 
+        append: true
+        password: "{{ ' mgr_pass' | password_hash('sha512') }}"

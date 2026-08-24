@@ -3,21 +3,24 @@
   hosts: all
   become: true
   tasks:
-    - name: install php ans mariadb on all hosts
+    - name: packages on dev and test
       loop:
         - php
         - mariadb
-      dnf:
+      ansible.builtin.dnf:
         name: "{{ item }}"
         state: latest
 
-    - name: install dev tools on dev
+    - name: install rpm dev tools on dev
       when: inventory_hostname in groups['dev']
-      dnf:
+      ansible.builtin.dnf:
         name: '@RPM Development Tools'
         state: latest
-    - name:
+
+    - name: update all on dev
       when: inventory_hostname in groups['dev']
-      dnf:
+      ansible.builtin.dnf:
         name: "*"
         state: latest
+
+

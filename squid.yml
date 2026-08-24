@@ -1,0 +1,6 @@
+---
+- name: squid
+  hosts: balancers
+  become: true
+  roles:
+    - squid

@@ -1,1 +1,13 @@
-Welcome to {{ ansible_facts['fqdn'] }} on ansible_facts['default_ipv4]'['address'] }}
+[defaults]
+roles_path= /home/devops/ansible/roles
+collections_path= /home/devops/ansible/collections
+remote_user= devops
+
+[privilege_escalation]
+become=True
+become_ask_pass=False
+become_method=sudo
+become_user=root
+
+
+

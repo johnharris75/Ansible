@@ -4,5 +4,10 @@ ansible-navigator:
     image: quay.io/ansible/creator-ee
     pull:
       policy: missing
-  playbook-artifact:
+  playbook-artifact: 
     enable: false
+
+  logging:
+    level: info
+    append: true
+    file: /home/devops/ansible/ansible-navigator.log

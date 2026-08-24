@@ -1,0 +1,50 @@
+---
+- name: part
+  hosts: all
+  become: true
+  tasks:
+    - name: block
+      block:
+        - name: ensure disk exists
+          when: "'sdb' not in ansible_devices"
+          ansible.builtin.debug:
+            msg: "disk not present"
+
+        - name: create 1200 part
+          when: "'sdb' in ansible_devices"
+          community.general.parted:
+            device: /dev/sdb
+            number: 1
+            fs_type: ext4
+            part_end: 1200MiB
+
+      rescue:
+        - name: ensure disk is adequate
+          when: "'sdb' in ansible_devices"
+          ansible.builtin.debug:
+            msg: "Disk not big enough"
+
+        - name: crate 800MiB
+          when: "'sdb' in asnible_devices"
+          community.general.parted:
+            device: /dev/sdb
+            number: 1
+            fs_type: ext4
+            part_end: 800MiB
+
+      always:
+        - name: create fs
+          when:
+            - ansible.devices.sdb is defined
+            - "'sdb1' in ansible_devices.sdb.partitions"
+          community.general.filesystem:
+            device: /dev/sdb1
+            fstype: ext4
+
+        - name: mount of prod
+          when: inventory_hostname in groups['prod']
+          ansible.posix.mount:
+            src: /dev/sdb1
+            path: /srv
+            fstpye: ext4
+            state: mounted

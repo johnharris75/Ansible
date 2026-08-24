@@ -1,0 +1,9 @@
+---
+- name: hwreport
+  hosts: all
+  become: true
+  tasks:
+    - name: template
+      ansible.builtin.template:
+        src: ./hwreport.j2
+        dest: /root/hwreport.txt

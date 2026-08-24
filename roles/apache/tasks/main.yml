@@ -1,26 +1,26 @@
 ---
 - name: packages
   loop: "{{ packages }}"
-  dnf:
+  ansible.builtin.dnf:
     name: "{{ item }}"
     state: latest
 
 - name: service
   loop: "{{ packages }}"
-  service:
+  ansible.builtin.service:
     name: "{{ item }}"
     enabled: true
     state: started
 
 - name: firewall
   loop: "{{ rules }}"
-  firewalld:
+  ansible.posix.firewalld:
     service: "{{ item }}"
-    permanent: true
     state: enabled
+    permanent: true
     immediate: true
 
 - name: template
-  template:
+  ansible.builtin.template:
     src: ./index.html.j2
     dest: /var/www/html/index.html

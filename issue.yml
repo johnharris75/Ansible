@@ -1,0 +1,22 @@
+---
+- name: issue
+  hosts: all
+  become: true
+  tasks:
+    - name: replace contents
+      when: inventory_hostname in ['dev']
+      ansible.builtin.copy:
+        content: 'devsssss'
+        dest: /etc/issue
+
+    - name: replace contents
+      when: inventory_hostname in ['test']
+      ansible.builtin.copy:
+        content: 'tsssssstt'
+        dest: /etc/issue
+
+    - name: replace contents
+      when: inventory_hostname in ['prod']
+      ansible.builtin.copy:
+        content: 'prodssssss'
+        dest: /etc/issue

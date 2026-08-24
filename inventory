@@ -10,5 +10,5 @@
 [webservers:children]
 prod
 
-[balancer]
+[balancers]
 192.168.56.105
