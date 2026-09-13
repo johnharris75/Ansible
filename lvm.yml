@@ -1,0 +1,40 @@
+---
+- name: lvm
+  hosts: all
+  become: true
+  tasks:
+    - name: block
+      block:
+        - name: ensure lvm is defined
+          when: ansible_lvm.vgs.research is not defined
+          ansible.builtin.debug:
+            msg: "Disk not defined"
+
+        - name: create lvm of 1200M 
+          when: ansible_lvm.vgs.research is defined
+          community.general.lvol:
+            vg: research
+            lv: data
+            size: 1200M
+
+      rescue:
+        - name: check if size is adequates
+          when: ansible_vgs.lvm.research is defined
+          ansible.builtin.debug:
+            msg: "Disk not large enough, Try 800M"
+
+        - name: create lvm of 1200M 
+          when: ansible_vgs.lvm.research is defined
+          community.general.lvol:
+            vg: research
+            lv: data
+            size: 1200M
+
+      always:
+        - name: create fs
+          when: ansible_lvm.vgs.research is defined
+          community.general.filesystem:
+            dev: /dev/research/data
+            fstype: ext4
+
+

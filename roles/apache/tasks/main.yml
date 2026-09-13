@@ -5,11 +5,12 @@
     name: "{{ item }}"
     state: latest
 
+
 - name: service
   loop: "{{ packages }}"
   ansible.builtin.service:
     name: "{{ item }}"
-    enabled: true
+    enabled: true 
     state: started
 
 - name: firewall
@@ -20,7 +21,4 @@
     permanent: true
     immediate: true
 
-- name: template
-  ansible.builtin.template:
-    src: ./index.html.j2
-    dest: /var/www/html/index.html
+

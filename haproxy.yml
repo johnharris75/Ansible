@@ -1,11 +1,13 @@
 ---
-- name: php role
+- name: roles
+  hosts: balancers
+  become: true
+  roles:
+    - balancer
+- name: roles
   hosts: webservers
   become: true
   roles:
     - php
 
-- name: balancer
-  hosts: balancer
-  roles:
-    - balancer
+

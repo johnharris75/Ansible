@@ -3,20 +3,18 @@
   hosts: all
   become: true
   tasks:
-    - name: replace contents
-      when: inventory_hostname in ['dev']
+    - name: copy on dev
+      when: inventory_hostname in groups['dev']
       ansible.builtin.copy:
-        content: 'devsssss'
+        content: "DEVVVVVS"
         dest: /etc/issue
-
-    - name: replace contents
-      when: inventory_hostname in ['test']
+    - name: copy on prod
+      when: inventory_hostname in groups['prod']
       ansible.builtin.copy:
-        content: 'tsssssstt'
+        content: "PSSSS"
         dest: /etc/issue
-
-    - name: replace contents
-      when: inventory_hostname in ['prod']
+    - name: copy on test 
+      when: inventory_hostname in groups['test']
       ansible.builtin.copy:
-        content: 'prodssssss'
+        content: "Test"
         dest: /etc/issue

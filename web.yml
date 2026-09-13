@@ -1,0 +1,34 @@
+---
+- name: web
+  hosts: all
+  become: true
+  tasks:
+    - name: create group
+      ansible.builtin.group:
+        name: devops
+        state: present
+
+    - name: create dir
+      ansible.builtin.file:
+        dest: /webs
+        state: directory
+        mode: '2755' 
+        owner: root
+        group: devops
+        setype: httpd_sys_content_t
+
+    - name: create index
+      ansible.builtin.copy:
+        content: "Hello"
+        dest: /webs/index.html
+        group: devops
+        owner: root
+        mode: '0644'
+        setype: httpd_sys_content_t
+
+    - name: sym
+      ansible.builtin.file:
+        src: /webs
+        dest: /var/www/html/webs
+        state: link
+        force: yes

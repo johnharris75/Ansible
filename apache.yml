@@ -1,6 +1,6 @@
 ---
 - name: apache
-  hosts: all
+  hosts: webservers
   become: true
   roles:
     - apache

@@ -1,8 +1,0 @@
-ansible-navigator:
-  execution-environment:
-    container-engine: podman
-    image:
-    pull:
-      policy: missing
-  playbook_artifact:
-    enable: false  

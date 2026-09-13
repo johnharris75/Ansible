@@ -3,9 +3,9 @@
   hosts: all
   become: true
   vars:
-    timesync_ntp_servers:
+    timesync_ntp_server:
       - hostname: time.google.com
         iburst: true
   roles:
     - linux-system-roles.timesync
-  
+    
