@@ -9,6 +9,14 @@
         baseurl: file:///mnt/BaseOS/
         description: Base OS Repo
         gpgcheck: yes
-        enabled: no
+        enabled: yes
         gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-AlmaLinux-9
 
+    - name: AppStream
+      ansible.builtin.yum_repository:
+        name: Stream
+        baseurl: file:///mnt/AppStream/
+        description: AppStream Repo
+        gpgcheck: yes
+        enabled: yes
+        gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-AlmaLinux-9

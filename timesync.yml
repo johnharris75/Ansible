@@ -1,5 +1,5 @@
 ---
-- name: timesync
+- name: timesync role
   hosts: all
   become: true
   vars:
@@ -7,5 +7,5 @@
       - hostname: time.google.com
         iburst: true
   roles:
-    - linux-system-roles.timesync
-    
+    - rhel-system-roles.timesync
+

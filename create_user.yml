@@ -1,45 +1,47 @@
 ---
-- name: create user based on job descriptopm
+- name: create user
   hosts: dev test
   become: true
   vars_files:
-    - vault.yml
     - user_list.yml
+    - vault.yml
   tasks:
-    - name: ensure devops1
+    - name: ensure group exists
       ansible.builtin.group:
-        name: devops1
+        name: devops
         state: present
 
-    - name: create user add to supplimentart grtoup and password
+    - name: create user based on job desc
+      when: item.job == 'developer'
       loop: "{{ users }}"
       ansible.builtin.user:
-        name:  "{{ item.name }}"
+        name: "{{ item.name }}"
         shell: /bin/bash
         uid: "{{ item.uid }}"
-        group: devops1
+        groups: devops
         append: true
-        password: "{{ 'dev_pass' | password_hash('sha512') }}" 
+        password: "{{ 'dev_pass' | password_hash('sha512') }}"
 
-- name: create user based on job descriptopm
-  hosts: prod 
+
+- name: create user
+  hosts: prod
   become: true
   vars_files:
-    - vault.yml
     - user_list.yml
+    - vault.yml
   tasks:
-    - name: ensure devops1
+    - name: ensure group exists
       ansible.builtin.group:
-        name: opsmgr1
+        name: managers
         state: present
 
-    - name: create user add to supplimentart grtoup and password
+    - name: create user based on job desc
+      when: item.job == 'manager'
       loop: "{{ users }}"
       ansible.builtin.user:
-        name:  "{{ item.name }}"
+        name: "{{ item.name }}"
         shell: /bin/bash
         uid: "{{ item.uid }}"
-        group: opsmgr1
+        groups: managers
         append: true
-        password: "{{ 'mgr_pass' | password_hash('sha512') }}" 
-
+        password: "{{ 'mgr_pass' | password_hash('sha512') }}"

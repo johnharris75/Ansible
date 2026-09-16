@@ -1,23 +1,29 @@
 ---
-- name: packages
-  hosts: all
+- name: install php and mariadb on dev
+  hosts: prod dev test
   become: true
   tasks:
-    - name: install software on dev and test
-      when: inventory_hostname in groups['dev'] or inventory_hostname in groups['test']
+    - name: install packages
       ansible.builtin.dnf:
         name:
           - php
           - mariadb
         state: present
 
-    - name: install dev tools
-      when: inventory_hostname in groups['dev']
+- name: install dev tools on dev
+  hosts: dev
+  become: true
+  tasks:
+    - name: dev tools
       ansible.builtin.dnf:
         name: '@RPM Development Tools'
         state: present
 
-    - name: update all
+- name: update all packages
+  hosts: dev
+  become: true
+  tasks:
+    - name: update
       ansible.builtin.dnf:
         name: "*"
         state: latest

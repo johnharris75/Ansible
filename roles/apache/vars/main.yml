@@ -1,6 +1,6 @@
 packages:
-  - httpd
   - firewalld
+  - httpd
 rules:
   - http
   - https

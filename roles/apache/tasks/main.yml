@@ -1,17 +1,15 @@
----
-- name: packages
+- name: install packages
   loop: "{{ packages }}"
   ansible.builtin.dnf:
     name: "{{ item }}"
-    state: latest
-
+    state: present
 
 - name: service
   loop: "{{ packages }}"
   ansible.builtin.service:
     name: "{{ item }}"
-    enabled: true 
     state: started
+    enabled: true
 
 - name: firewall
   loop: "{{ rules }}"
@@ -21,4 +19,9 @@
     permanent: true
     immediate: true
 
+- name: index file
+  ansible.builtin.template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
+    mode: '0644'
 

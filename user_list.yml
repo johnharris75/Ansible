@@ -1,11 +1,11 @@
 users:
-- name: max
-  job: developer
-  uid: 6000
-- name: ali
-  job: manager
-  uid: 6001
-- name: paul
-  job: developer
-  uid: 6002
+  - name: adam1
+    job: developer
+    uid: 300009
+  - name: gabriel1
+    job: manager
+    uid: 300108
+  - name: lucifer1
+    job: developer
+    uid: 30010
 

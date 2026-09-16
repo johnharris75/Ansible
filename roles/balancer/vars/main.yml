@@ -1,13 +1,2 @@
-firewall_rules:
-  - port: 8080/tcp
-  - zone: public
-    service: http
-    source: 192.168.56.104
-proxy_appservers:
-  - name: node5
-    ip: 192.168.56.105
-    backend_port: 80
-
-  - name: node5
-    ip: 192.168.56.106
-    backend_port: 80
+---
+# vars file for web-balancer

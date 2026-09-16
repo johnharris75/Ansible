@@ -1,16 +1,17 @@
 ---
-- name: cron as nat
+- name: cron as celi
   hosts: all
   become: true
   tasks:
     - name: create user
       ansible.builtin.user:
-        name: nat
+        name: celi
         shell: /bin/bash
 
     - name: cron
       ansible.builtin.cron:
-        name: cron as nat
-        job: 'logger "EX294 in progresss"'
+        name: cron as celi
+        job: "'logger' echo 'Ex294'"
         minute: "*/2"
-        user: nat
+        user: celi
+
