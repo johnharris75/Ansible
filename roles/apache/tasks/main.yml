@@ -1,4 +1,5 @@
-- name: install packages
+---
+- name: packages
   loop: "{{ packages }}"
   ansible.builtin.dnf:
     name: "{{ item }}"
@@ -19,9 +20,8 @@
     permanent: true
     immediate: true
 
-- name: index file
+- name: index
   ansible.builtin.template:
     src: index.html.j2
     dest: /var/www/html/index.html
     mode: '0644'
-

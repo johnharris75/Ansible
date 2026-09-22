@@ -3,20 +3,20 @@
   hosts: all
   become: true
   tasks:
-    - name: copy a line to a file based on group
+    - name: dev
       when: inventory_hostname in groups['dev']
       ansible.builtin.copy:
-        content: "DEV"
-        dest: /etc/myisse
+        content: "DEVS"
+        dest: /etc/issue
 
-    - name: copy a line to a file based on group
+    - name: test
       when: inventory_hostname in groups['test']
       ansible.builtin.copy:
         content: "test"
-        dest: /etc/myisse
-    
-    - name: copy a line to a file based on group
+        dest: /etc/issue
+
+    - name: dev
       when: inventory_hostname in groups['prod']
       ansible.builtin.copy:
         content: "prod"
-        dest: /etc/myisse
+        dest: /etc/issue

@@ -1,11 +1,11 @@
 ---
-- name: timesync role
+- name: timesync
   hosts: all
   become: true
   vars:
-    timesync_ntp_server:
+    timesync_ntp_servers:
       - hostname: time.google.com
         iburst: true
+
   roles:
     - rhel-system-roles.timesync
-

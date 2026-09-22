@@ -1,8 +1,9 @@
 ---
-- name: selinux
+- name: selinux role
   hosts: all
   become: true
   vars:
-    - selinux_state: permissive
+    selinux_policy: targeted
+    selinux_state: enforcing
   roles:
     - linux-system-roles.selinux

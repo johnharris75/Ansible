@@ -1,22 +1,21 @@
 ---
-- name: repo
+- name: repos
   hosts: test
   become: true
   tasks:
-    - name: BaseOS
+    - name: repo
       ansible.builtin.yum_repository:
-        name: BaseOS
+        name: repo
         baseurl: file:///mnt/BaseOS/
         description: Base OS Repo
-        gpgcheck: yes
-        enabled: yes
+        gpgcheck: false
+        enabled: true
         gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-AlmaLinux-9
-
-    - name: AppStream
+    - name: AppStream repo
       ansible.builtin.yum_repository:
-        name: Stream
+        name: AppStream
         baseurl: file:///mnt/AppStream/
         description: AppStream Repo
-        gpgcheck: yes
-        enabled: yes
+        gpgcheck: false
+        enabled: true
         gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-AlmaLinux-9

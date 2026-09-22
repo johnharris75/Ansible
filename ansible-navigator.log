@@ -5383,3 +5383,21 @@ b'Error: no container with name or ID "ansible_runner_9fd70b40-3874-4a15-8bfa-75
 2026-08-21T08:30:39.001336+00:00 INFO 'ansible_navigator.setup_logger' New ansible-runner instance, logging initialized
 2026-08-21T08:30:39.001540+00:00 INFO 'ansible_navigator.main' EE support enabled: found 'ansible.cfg' in current working directory.
 2026-08-21T08:30:39.001816+00:00 INFO 'ansible_navigator.image_manager.puller._log_message' Image tag is: latest
+2026-09-17T23:00:26.555907+00:00 INFO 'ansible_navigator.setup_logger' New ansible-navigator instance, logging initialized
+2026-09-17T23:00:26.558819+00:00 INFO 'ansible_navigator.setup_logger' New ansible-runner instance, logging initialized
+2026-09-17T23:00:26.559006+00:00 INFO 'ansible_navigator.main' EE support enabled: found 'ansible.cfg' in current working directory.
+2026-09-17T23:00:26.559225+00:00 INFO 'ansible_navigator.image_manager.puller._log_message' Image tag is: latest
+2026-09-17T23:00:27.124899+00:00 WARNING 'ansible_navigator.image_manager.puller._log_message' Image inspection failed, image assumed to be corrupted or missing
+2026-09-17T23:00:27.125250+00:00 WARNING 'ansible_navigator.image_manager.puller._log_message' stdout: 
+2026-09-17T23:00:27.125408+00:00 WARNING 'ansible_navigator.image_manager.puller._log_message' stderr: time="2026-09-17T16:00:27-07:00" level=warning msg="RunRoot is pointing to a path (/run/user/1001/containers) which is not writable. Most likely podman will fail."
+Error: creating events dirs: mkdir /run/user/1001: permission denied
+
+2026-09-17T23:00:27.126396+00:00 INFO 'ansible_navigator.image_manager.puller._log_message' Execution environment image name:: quay.io/ansible/creator-ee:latest
+2026-09-17T23:00:27.126967+00:00 INFO 'ansible_navigator.image_manager.puller._log_message' Execution environment image tag:: latest
+2026-09-17T23:00:27.127301+00:00 INFO 'ansible_navigator.image_manager.puller._log_message' Execution environment pull arguments:: None
+2026-09-17T23:00:27.127557+00:00 INFO 'ansible_navigator.image_manager.puller._log_message' Execution environment pull policy:: missing
+2026-09-17T23:00:27.128126+00:00 INFO 'ansible_navigator.image_manager.puller._log_message' Execution environment pull needed:: True
+2026-09-17T23:00:27.232788+00:00 ERROR 'ansible_navigator.image_manager.puller._log_message' Execution environment pull failed
+2026-09-17T23:00:27.233130+00:00 INFO 'ansible_navigator.image_manager.puller._log_message' Check the execution environment image name, connectivity to and permissions for the registry, and try again
+2026-09-17T23:00:27.401965+00:00 INFO 'ansible-runner.kill_container' Error from podman kill ansible_runner_04bdbf1e-bcb8-4e8a-84b8-0cb2322440e9 command:
+b'time="2026-09-17T16:00:27-07:00" level=warning msg="RunRoot is pointing to a path (/run/user/1001/containers) which is not writable. Most likely podman will fail."\nError: creating events dirs: mkdir /run/user/1001: permission denied\n'

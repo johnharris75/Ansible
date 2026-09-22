@@ -5,26 +5,26 @@
   tasks:
     - name: block
       block:
-        - name: ensure disk is defined
-          when: ansible_devices.sdb not defined
+        - name: ensure part is defined
+          when: ansbile_devices.sdb is not defined
           ansible.builtin.debug:
-            msg: "part not defined"
+            msg: "PART NOT DEFINED"
 
-        - name: create part
+        - name: create part 1000
           when: ansible_devices.sdb is defined
           community.general.parted:
             device: /dev/sdb
             number: 1
             fs_type: ext4
-            part_end: 1200MiB
+            part_end: 1000MiB
 
       rescue:
-        - name: ensure disk has enough space
-          when: ansible_devices.sdb is defined
+        - name: ensure part is defined
+          when: ansbile_devices.sdb is not defined
           ansible.builtin.debug:
-            msg: "part not large enough"
+            msg: "PART NOT large enough"
 
-        - name: create part
+        - name: create part 800
           when: ansible_devices.sdb is defined
           community.general.parted:
             device: /dev/sdb
@@ -32,18 +32,9 @@
             fs_type: ext4
             part_end: 800MiB
 
-
       always:
         - name: create fs
-          when: ansible_devices.sdb is defined
+          when: ansible_devices.sdb1 is defined
           community.general.filesystem:
-            dev: /dev/sdb
             fstype: ext4
-
-        - name: mount if on prod
-          when: inventory_hostname in groups['prod']
-          ansible.posix.mount:
-            path: /srv
-            src: /desv/sdb1
-            fstype: ext4
-            state: mounted
+            dev: /dev/sdb1

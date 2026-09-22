@@ -1,0 +1,7 @@
+- name: Retrieve Default IPv4 Address
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Display Default IPv4 Address
+      ansible.builtin.debug:
+        var: ansible_default_ipv4.address
