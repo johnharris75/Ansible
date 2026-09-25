@@ -1,27 +1,27 @@
 ---
-- name: configure hardware report
+- name: hwreport
   hosts: all
+  become: true
   tasks:
-    - name: Download url
+    - name: download url
       ansible.builtin.get_url:
         url: https://raw.githubusercontent.com/RedHatRanger/RHCE9Vagrant/main/rhce-practice-questions/golden_files/hwreport.txt
         dest: /root/hwreport.txt
-        mode: '0644'
-        owner: root
-        group: root
-    - name: COnfigure report
+
+    - name: configure report
       ansible.builtin.replace:
         path: /root/hwreport.txt
-        regexp: "{{ item.oldinfo }}"
-        replace: "{{ item.newinfo }}"
+        regexp: "{{ item.old }}"
+        replace: "{{ item.new }}"
       loop:
-        - oldinfo: "inventoryhostname"
-          newinfo: "{{ ansible_hostname | default('NONE') }}"
-        - oldinfo: "memory_in_MB"
-          newinfo: "{{ ansible_memory_mb.real.total | default('NONE') }}"
-        - oldinfo: "BIOS_version"
-          newinfo: "{{ ansible_bios_version | default('NONE') }}"
-        - oldinfo: "disk_sda_size"
-          newinfo: "{{ ansible_devices.sda.size | default('NONE') }}"
-        - oldinfo: "disk_sdb_size"
-          newinfo: "{{ ansible_devices.sdb.size | default('NONE') }}"
+        - old: "inventoryhostname"
+          new: "{{ ansible_hostname | default ('NONE') }}"
+        - old: "memory_in_MB"
+          new: "{{ ansible_memtotal_mb | default ('NONE') }}"
+        - old: "BIOS_version"
+          new: "{{ ansible_bios_version | default ('NONE') }}"
+        - old: "disk_sda_size"
+          new: "{{ ansible_devices.sda.size | default  ('NONE') }}"
+        - old: "disk_sdb_size"
+          new: "{{ ansible_devices.sdb.size | default ('NONE') }}"
+

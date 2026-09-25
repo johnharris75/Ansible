@@ -1,27 +1,33 @@
 ---
-- name: packages
-  loop: "{{ packages }}"
+- name: install packages
   ansible.builtin.dnf:
-    name: "{{ item }}"
+    name:
+      - httpd
+      - firewalld
     state: present
 
-- name: service
-  loop: "{{ packages }}"
+- name: start and enable firewall
   ansible.builtin.service:
-    name: "{{ item }}"
+    name: firewalld
     state: started
     enabled: true
 
-- name: firewall
-  loop: "{{ rules }}"
-  ansible.posix.firewalld:
-    service: "{{ item }}"
-    state: enabled
-    permanent: true
-    immediate: true
-
-- name: index
+- name: host the web page template
   ansible.builtin.template:
     src: index.html.j2
     dest: /var/www/html/index.html
-    mode: '0644'
+
+- name: allow http traffice
+  ansible.posix.firewalld:
+    service: http
+    permanent: true
+    state: enabled
+    immediate: true
+
+- name: start and enabled httpd
+  ansible.builtin.service:
+    name: httpd
+    state: started
+    enabled: true
+
+

@@ -1,0 +1,37 @@
+---
+- name: create users
+  hosts: all
+  become: true
+  vars_files:
+    - user_list.yml
+    - vault.yml
+  tasks:
+    - name: create groups
+      ansible.builtin.group:
+        name: devops
+        state: present
+
+    - name: create users with desc dev
+      when: inventory_hostname in groups['prod'] and item.job == 'developer'
+      loop: "{{ users }}"
+      ansible.builtin.user:
+        name: "{{ item.name }}"
+        shell: /bin/bash
+        groups: devops
+        password: "{{ 'dev_pass' | password_hash('sha512') }}"
+          
+  tasks:
+    - name: create groups
+      ansible.builtin.group:
+        name: managers 
+        state: present
+
+    - name: create users with desc dev
+      when: inventory_hostname in groups['dev'] or inventory_hostname in groups['test'] and item.job == 'manager' 
+      loop: "{{ users }}"
+      ansible.builtin.user:
+        name: "{{ item.name }}"
+        shell: /bin/bash
+        groups: managers
+        password: "{{ 'mgr_pass' | password_hash('sha512') }}"
+          

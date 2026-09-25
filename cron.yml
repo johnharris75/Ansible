@@ -1,17 +1,12 @@
 ---
-- name: cron as araceli
-  hosts: all
+- name: cron
   become: true
+  hosts: all
   tasks:
-    - name: create user
-      ansible.builtin.user:
-        name: araceli
-        state: present
-        shell: /bin/bash
-    - name: cron
+    - name: cron job
       ansible.builtin.cron:
-        name: cron as araceli
-        job: 'logger echo "EX294 in progress"'
+        name: cron as nat
+        user: nat
         minute: "*/2"
-        user: araceli
-
+        job: logger "ex294"
+        state: present

@@ -1,0 +1,13 @@
+---
+- name: repo
+  hosts: test
+  become: true
+  tasks:
+    - name: baseos
+      ansible.builtin.yum_repository:
+        name: baseos
+        description: ex294 repo
+        baseurl: http://baseos
+        gpgcheck: true
+        gpgkey: http://RPM-GPG-KEY-redhat-release
+        enabled: true

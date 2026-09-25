@@ -1,34 +1,34 @@
+
 ---
-- name: webcontent
-  hosts: all
+- name: webdev
+  hosts: dev
   become: true
   tasks:
-    - name: ensure group exists
+    - name: ensure group
       ansible.builtin.group:
-        name: devops2
+        name: apache
         state: present
 
-    - name: create directory
+    - name: create /webdev
       ansible.builtin.file:
-        path: /devops2
+        dest: /webdev
         state: directory
-        owner: root
-        group: devops2
+        group: apache
         mode: '2755'
         setype: httpd_sys_content_t
 
-    - name: index 
-      ansible.builtin.copy:
-        content: "OH SHIT"
-        dest: /devops2/index.html
-        owner: root
-        group: root
-        mode: '0644'
+    - name: create sym link
+      ansible.builtin.file:
+        src: /webdev
+        dest: /var/www/html/webdev
+        state: link
+        force: true
         setype: httpd_sys_content_t
 
-    - name: sym
-      ansible.builtin.file:
-        src: /devops2
-        dest: /var/www/html/devops
-        state: link
-        force: yes
+    - name: index file
+      ansible.builtin.copy:
+        content: Development
+        dest: /webdev/index.html
+        setype: httpd_sys_content_t
+
+

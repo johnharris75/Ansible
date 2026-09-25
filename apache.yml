@@ -1,7 +1,4 @@
 ---
-- name: apache
-  hosts: webservers
-  become: true
+- hosts: dev 
   roles:
     - apache
-

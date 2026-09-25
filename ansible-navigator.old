@@ -1,8 +1,0 @@
-ansible-navigator:
-  execution-environment:
-    container-engine: podman
-    image: quay.io/ansible/creator-ee
-    pull:
-      policy: missing
-  playbook-artifact:
-    enable: false

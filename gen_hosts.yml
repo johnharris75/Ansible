@@ -1,9 +1,9 @@
 ---
-- name: hosts
+- name: myhosts
   hosts: all
   become: true
   tasks:
     - name: template
       ansible.builtin.template:
         src: ./hosts.j2
-        dest: /etc/myhosts
+        dest: /etc/hosts

@@ -1,3 +1,0 @@
----
-# Default repository url redhat family systems.
-_afs_yum_repo: "https://download.sinenomine.net/openafs/rpms/el$releasever/$basearch"

@@ -6,35 +6,33 @@
     - name: block
       block:
         - name: ensure vg is defined
-          when: ansible_.lvm.vgs.research is not defined
+          when: ansible_lvm.vgs.research is not defined
           ansible.builtin.debug:
-            msg: "VG NOT DEFINED" 
+            msg: VG is not defined
 
-        - name: create 1000M
+        - name: create 1200M
           when: ansible_lvm.vgs.research is defined
           community.general.lvol:
             vg: research
             lv: data
-            size: 1000M
+            size: 1200M
 
       rescue:
-        - name: ensure vg is defined
-          when: ansible_lvm.vgsresearch is  defined
+        - name: ensure vg has enough space
+          when: ansible_lvm.research is defined
           ansible.builtin.debug:
-            msg: "VG NOT LARGE ENOUGH"
+            msg: VG not enough space
 
-        - name: create 600M
+        - name: create 800M
           when: ansible_lvm.vgs.research is defined
           community.general.lvol:
             vg: research
             lv: data
-            size: 600M
+            size: 800M
 
       always:
-        - name: create filesystem
+        - name: create an ext4 fs
           when: ansible_lvm.vgs.research is defined
           community.general.filesystem:
             dev: /dev/research/data
             fstype: ext4
-
-

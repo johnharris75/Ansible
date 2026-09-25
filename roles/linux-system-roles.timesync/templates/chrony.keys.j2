@@ -1,5 +1,0 @@
-{{ ansible_managed | comment }}
-{{ "system_role:timesync" | comment(prefix="", postfix="") }}
-{% for key in __timesync_ntp_unique_keys %}
-{{ key }}
-{% endfor %}

@@ -1,0 +1,81 @@
+---
+# HAProxy version to install, according to HAProxy you should stick to versions/braches (for example 2.8.x or 2.9.x) and apply all patches,
+# for example 2.8.1, 2.8.2, etc. This variable follows that logic and passes the package to apt as "haproxy={{ haproxy_version }}.*"
+# For more info read https://github.com/haproxy/haproxy/blob/master/BRANCHES
+# Leaving this blank will allow the package manager to select the version to install
+haproxy_version:
+
+# HAProxy package state
+haproxy_package_state: present
+
+# Global config section
+haproxy_global_vars:
+  - log /dev/log local0
+  - log /dev/log local1 notice
+  - stats socket /var/lib/haproxy/stats level admin
+  - chroot /var/lib/haproxy
+  - user haproxy
+  - group haproxy
+  - daemon
+
+# Default config section
+haproxy_default_vars:
+  - log global
+  - mode tcp
+  - option tcplog
+  - option dontlognull
+
+# Frontend sections (check example below)
+haproxy_frontends: []
+# haproxy_frontends:
+#   - name: example_frontend
+#     config:
+#       - bind *:80
+#       - mode tcp
+#       - default_backend example_backend
+#       - option tcplog
+
+#   - name: stats
+#     config:
+#       - bind *:8404
+#       - mode http
+#       - stats enable
+#       - stats uri /stats
+#       - stats refresh 5s
+#       - stats admin if TRUE
+
+# Backend sections (check example below)
+haproxy_backends: []
+# haproxy_backends:
+#   - name: example_backend
+#     config:
+#       - mode tcp
+#       - balance roundrobin
+#       - option httpchk GET /
+#       - http-check expect status 200
+#       - default-server inter 3s downinter 3s rise 2 fall 2 slowstart 60s
+#       - server app1 10.10.10.11:80 check port 80
+#       - server app2 10.10.10.12:80 check port 80
+
+# Listen section (check example below)
+haproxy_listens: []
+# haproxy_listens:
+#   - name: example_listen
+#     config:
+#       - bind *:443
+#       - mode tcp
+#       - option tcplog
+#       - balance roundrobin
+#       - option httpchk GET /
+#       - server app1 10.10.10.21:443 check check-ssl
+#       - server app2 10.10.10.22:443 check check-ssl
+
+# haproxy demands that the key be the same filename as the certificate, except
+# with .key appended to the filename. This is not how LetsEncrypt stores the
+# files. The following option makes a symlink for fullchain.pem and calls it
+# fullchain.pem.key to satisfy haproxy.
+haproxy_create_key_symlink: false
+# The following two are only used if the above is set to true
+haproxy_key_location: /etc/letsencrypt/live/{{ ansible_fqdn }}/privkey.pem
+haproxy_cert_location: /etc/letsencrypt/live/{{ ansible_fqdn }}/fullchain.pem
+# the symlink will always be created at: "{{ haproxy_cert_location }}.key"
